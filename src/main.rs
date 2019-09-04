@@ -40,7 +40,7 @@ fn main() {
 
     let now = Instant::now();
     rayon::scope(|s| {
-        for i in 0..num_cpus::get() {
+        for _ in 0..num_cpus::get() {
             s.spawn(|t| {
                 println!("Thread {}: Took {:?} seconds.", rayon::current_thread_index().unwrap_or(0), do_stuff());
             })
