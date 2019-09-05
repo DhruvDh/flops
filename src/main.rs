@@ -43,7 +43,7 @@ fn main() {
     
     let now = Instant::now();
     rayon::scope(|s| {
-        for _ in 0..32 {
+        for _ in 0..16 {
             s.spawn(|_| {
                 println!("Thread {}: Took {:?} seconds.", rayon::current_thread_index().unwrap_or(0), do_stuff());
             })
