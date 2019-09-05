@@ -13,14 +13,14 @@ fn new_simd_float() -> f32x8 {
     f32x8::from_slice_unaligned(&random_floats[0..8])
 }
 
-fn do_stuff() -> f32 {
+fn do_stuff() {
     let mut a = new_simd_float(); 
     let mut b = new_simd_float(); 
     let mut c = new_simd_float(); 
 
     // dbg!(&a); // reading the value to ensure compiler actually computes them
 
-    let now = Instant::now();
+    // let now = Instant::now();
     for _ in 0..100_000_000 {
         for _ in 0..50 {
             // a = a - (b * c);
@@ -35,7 +35,7 @@ fn do_stuff() -> f32 {
     }
 
     dbg!(&a); // reading the value to ensure compiler actually computes them
-    now.elapsed().as_secs_f32()
+    // now.elapsed().as_secs_f32()
 }
 
 fn main() {
@@ -44,9 +44,7 @@ fn main() {
     let now = Instant::now();
     rayon::scope(|s| {
         for _ in 0..16 {
-            s.spawn(|_| {
-                println!("Thread {}: Took {:?} seconds.", rayon::current_thread_index().unwrap_or(0), do_stuff());
-            })
+            s.spawn(|_| do_stuff())
         }
     });
     println!("\n\nIn all, took {:?} seconds.", now.elapsed().as_secs_f32());
