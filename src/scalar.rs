@@ -40,16 +40,16 @@ fn main() {
         for _ in 0..5 {
             for i in 0..8 {
                 a[i] = a[i] - b[i];
-                b[i] = a[i] + b[i];
+                // b[i] = a[i] + b[i];
                 c[i] = a[i] * b[i];
 
-                a[i] = c[i] - b[i];
-                b[i] = a[i] + b[i];
-                c[i] = a[i] * b[i];
+                // a[i] = c[i] - b[i];
+                // b[i] = a[i] + b[i];
+                // c[i] = a[i] * b[i];
 
-                x[i] = x[i] - y[i];
-                y[i] = x[i] + y[i];        
-                z[i] = x[i] * y[i];
+                // x[i] = x[i] - y[i];
+                // y[i] = x[i] + y[i];        
+                // z[i] = x[i] * y[i];
             }
         }
     }
