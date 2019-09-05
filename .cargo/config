@@ -3,5 +3,7 @@ rustc = "rustc"           # the rust compiler tool
 target = "x86_64-unknown-linux-musl"         # build for the target triple (ignored by `cargo install`)
 rustflags = [
     "-C",
-    "target-cpu=haswell"
+    "target-cpu=haswell",
+    "--C",
+    "target-feature=avx2,sse3,fma"
 ]  # custom flags to pass to all compiler invocations
