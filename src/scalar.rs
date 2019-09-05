@@ -1,5 +1,4 @@
 use rand::prelude::*;
-use packed_simd::{i32x8, f32x8};
 use std::time::Instant;
 
 /// returns an array with 8 floats that will use SIMD instructions for operations
@@ -31,38 +30,33 @@ fn main() {
     let mut b = new_simd_float(); 
     let mut c = new_simd_float(); 
 
-    let mut x = new_simd_int(); 
-    let mut y = new_simd_int(); 
-    let mut z = new_simd_int(); 
+    let mut x = new_simd_float(); 
+    let mut y = new_simd_float(); 
+    let mut z = new_simd_float(); 
+
+    let mut i = new_simd_float(); 
+    let mut j = new_simd_float(); 
+    let mut k = new_simd_float();
+
+    let mut m = new_simd_float(); 
+    let mut n = new_simd_float(); 
+    let mut o = new_simd_float();
     
     let now = Instant::now();
     for _ in 0..100_000_000 {
-        for _ in 0..5 {
+        for _ in 0..50 {
             for i in 0..8 {
-                a[i] = a[i] - b[i];
-                // b[i] = a[i] + b[i];
-                c[i] = a[i] * b[i];
-
-                // a[i] = c[i] - b[i];
-                // b[i] = a[i] + b[i];
-                // c[i] = a[i] * b[i];
-
-                // x[i] = x[i] - y[i];
-                // y[i] = x[i] + y[i];        
-                // z[i] = x[i] * y[i];
+                a[i] = a[i].mul_add(b[i], c[i]);
+                x[i] = x[i].mul_add(y[i], z[i]);
+                i[i] = i[i].mul_add(j[i], k[i]);
+                o[i] = o[i].mul_add(n[i], m[i]);
             }
         }
     }
 
     println!("Took {:?} seconds.", now.elapsed().as_secs_f32());
-    dbg!(&c); // reading the value to ensure compiler actually computes them
-    dbg!(&z); // reading the value to ensure compiler actually computes them
-
-    // let x: Vec<f32x8> = (0..100_000_000).map(|_| new_simd_float()).collect();
-    // let y: Vec<i32x8> = (0..100_000_000).map(|_| new_simd_int()).collect();
-
-    // dbg!(&x);
-    // dbg!(&y);
-
-    let mut rng = rand::thread_rng();
+    dbg!(&a); // reading the value to ensure compiler actually computes them
+    dbg!(&x); // reading the value to ensure compiler actually computes them
+    dbg!(&i); // reading the value to ensure compiler actually computes them
+    dbg!(&o); // reading the value to ensure compiler actually computes them
 }
