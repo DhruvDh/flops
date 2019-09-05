@@ -22,24 +22,30 @@ fn do_stuff() -> f32 {
     let mut y = new_simd_float(); 
     let mut z = new_simd_float(); 
 
+    let mut i = new_simd_float(); 
+    let mut j = new_simd_float(); 
+    let mut k = new_simd_float();
+
+    let mut m = new_simd_float(); 
+    let mut n = new_simd_float(); 
+    let mut o = new_simd_float(); 
+
     // dbg!(&a); // reading the value to ensure compiler actually computes them
 
     let now = Instant::now();
     for _ in 0..100_000_000 {
         for _ in 0..50 {
-            // a = a - (b * c);
             a = a.mul_add(b, c);
             x = x.mul_add(y, z);
-            // c = c - (a * b);
-            // c = c.mul_add(a, b);
-            // b = b + (b * c);
-            // b = b.mul_add(b, c);
-            // a = a - b;
-            // c = a * b;        
+            i = i.mul_add(j, k);
+            o = o.mul_add(n, m);
         }
     }
 
     dbg!(&a); // reading the value to ensure compiler actually computes them
+    dbg!(&x); // reading the value to ensure compiler actually computes them
+    dbg!(&i); // reading the value to ensure compiler actually computes them
+    dbg!(&o); // reading the value to ensure compiler actually computes them
     now.elapsed().as_secs_f32()
 }
 
