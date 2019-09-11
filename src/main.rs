@@ -68,5 +68,75 @@ fn main() {
         };
     });
 
-    println!("\n\nIn all, Took {:?} seconds.", now.elapsed().as_secs_f32());
+    println!("\n\nIn all, Took {:?} seconds for {} threads.", now.elapsed().as_secs_f32(), threads);
+    let threads = 2;
+    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
+    
+    let now = Instant::now();    
+    rayon::scope(|s| {
+        for _ in 0..threads {
+            s.spawn(|_| {
+                println!("Took {:?} seconds.", do_stuff());
+            })
+        };
+    });
+
+    println!("\n\nIn all, Took {:?} seconds for {} threads.", now.elapsed().as_secs_f32(), threads);
+    
+
+    let threads = 4;
+    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
+    
+    let now = Instant::now();    
+    rayon::scope(|s| {
+        for _ in 0..threads {
+            s.spawn(|_| {
+                println!("Took {:?} seconds.", do_stuff());
+            })
+        };
+    });
+
+    println!("\n\nIn all, Took {:?} seconds for {} threads.", now.elapsed().as_secs_f32(), threads);    
+
+    let threads = 8;
+    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
+    
+    let now = Instant::now();    
+    rayon::scope(|s| {
+        for _ in 0..threads {
+            s.spawn(|_| {
+                println!("Took {:?} seconds.", do_stuff());
+            })
+        };
+    });
+
+    println!("\n\nIn all, Took {:?} seconds for {} threads.", now.elapsed().as_secs_f32(), threads);
+
+    let threads = 16;
+    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
+    
+    let now = Instant::now();    
+    rayon::scope(|s| {
+        for _ in 0..threads {
+            s.spawn(|_| {
+                println!("Took {:?} seconds.", do_stuff());
+            })
+        };
+    });
+
+    println!("\n\nIn all, Took {:?} seconds for {} threads.", now.elapsed().as_secs_f32(), threads);
+
+    let threads = 32;
+    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
+    
+    let now = Instant::now();    
+    rayon::scope(|s| {
+        for _ in 0..threads {
+            s.spawn(|_| {
+                println!("Took {:?} seconds.", do_stuff());
+            })
+        };
+    });
+
+    println!("\n\nIn all, Took {:?} seconds for {} threads.", now.elapsed().as_secs_f32(), threads);
 }
