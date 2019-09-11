@@ -36,21 +36,21 @@ macro_rules! mul_add_them {
 }
 
 fn do_stuff() -> f32 {
-    create_variables!(a, b, c, x, y, z, i, j, k, m, n, o,, new_simd_float);
+    create_variables!(a, b, c, x, y, z,, new_simd_float);
     // macro that expands to let a = new_simd_float() for each variable a, b, c...
 
     let now = Instant::now();
     for _ in 0..100_000_000 {
         for _ in 0..500 {
-            mul_add_them!(a, b, c,  x, y, z, i, j, k, m, n, o);
+            mul_add_them!(a, b, c,  x, y, z);
             // a macro that expands to a = a.mul_add(b, c); x = x.mul_add(y, z) and so on for each variable.
         }
     }
     
     dbg!(&a); // reading the value to ensure compiler actually computes them
     dbg!(&x); // reading the value to ensure compiler actually computes them
-    dbg!(&i); // reading the value to ensure compiler actually computes them
-    dbg!(&m); // reading the value to ensure compiler actually computes them
+    // dbg!(&i); // reading the value to ensure compiler actually computes them
+    // dbg!(&m); // reading the value to ensure compiler actually computes them
 
     now.elapsed().as_secs_f32()
 }
