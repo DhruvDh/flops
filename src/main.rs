@@ -1,7 +1,7 @@
 use rand::prelude::*;
+use rayon;
 use packed_simd::{i32x8, f32x8};
 use std::time::Instant;
-use std::thread;
 
 /// returns an array with 8 floats that will use SIMD instructions for operations
 fn new_simd_float() -> f32x8 {
@@ -56,20 +56,17 @@ fn do_stuff() -> f32 {
 }
 
 fn main() {
-
-    let mut threads = vec![];
-
+    let threads = 32;
+    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
+    
     let now = Instant::now();    
-    for _ in 0..16 {
-        threads.push(thread::spawn(|| {
-            println!("Took {:?} seconds.", do_stuff());
-        }));
-    }
-
-    for t in threads {
-        t.join();
-    }
+    rayon::scope(|s| {
+        for _ in 0..threads {
+            s.spawn(|_| {
+                println!("Took {:?} seconds.", do_stuff());
+            })
+        };
+    });
 
     println!("\n\nIn all, Took {:?} seconds.", now.elapsed().as_secs_f32());
-
 }
