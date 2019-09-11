@@ -57,7 +57,7 @@ fn do_stuff() -> f32 {
 
 fn main() {
     let threads = 1;
-    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
+    rayon::ThreadPoolBuilder::new().num_threads(32).build_global().unwrap();
     
     let now = Instant::now();    
     rayon::scope(|s| {
@@ -70,7 +70,6 @@ fn main() {
 
     println!("\n\nIn all, Took {:?} seconds for {} threads.", now.elapsed().as_secs_f32(), threads);
     let threads = 2;
-    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
     
     let now = Instant::now();    
     rayon::scope(|s| {
@@ -85,7 +84,6 @@ fn main() {
     
 
     let threads = 4;
-    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
     
     let now = Instant::now();    
     rayon::scope(|s| {
@@ -99,7 +97,6 @@ fn main() {
     println!("\n\nIn all, Took {:?} seconds for {} threads.", now.elapsed().as_secs_f32(), threads);    
 
     let threads = 8;
-    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
     
     let now = Instant::now();    
     rayon::scope(|s| {
@@ -113,7 +110,6 @@ fn main() {
     println!("\n\nIn all, Took {:?} seconds for {} threads.", now.elapsed().as_secs_f32(), threads);
 
     let threads = 16;
-    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
     
     let now = Instant::now();    
     rayon::scope(|s| {
@@ -127,7 +123,6 @@ fn main() {
     println!("\n\nIn all, Took {:?} seconds for {} threads.", now.elapsed().as_secs_f32(), threads);
 
     let threads = 32;
-    rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
     
     let now = Instant::now();    
     rayon::scope(|s| {
