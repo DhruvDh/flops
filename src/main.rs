@@ -37,12 +37,14 @@ macro_rules! mul_add_them {
 
 fn do_stuff() -> f32 {
     create_variables!(a, b, c, x, y, z, i, j, k, m, n, o,, new_simd_float);
+    create_variables!(A, B, C, D, X, Y, Z, I, J, K, M, N, O,, new_simd_float);
     // macro that expands to let a = new_simd_float() for each variable a, b, c...
 
     let now = Instant::now();
     for _ in 0..100_000_000 {
         for _ in 0..50 {
             mul_add_them!(a, b, c,  x, y, z, i, j, k, m, n, o);
+            mul_add_them!(A, B, C, X, Y, Z, I, J, K, M, N,  O);
             // a macro that expands to a = a.mul_add(b, c); x = x.mul_add(y, z) and so on for each variable.
         }
     }
@@ -51,6 +53,13 @@ fn do_stuff() -> f32 {
     dbg!(&x); // reading the value to ensure compiler actually computes them
     dbg!(&i); // reading the value to ensure compiler actually computes them
     dbg!(&m); // reading the value to ensure compiler actually computes them
+
+    dbg!(&A); // reading the value to ensure compiler actually computes them
+    dbg!(&X); // reading the value to ensure compiler actually computes them
+    dbg!(&I); // reading the value to ensure compiler actually computes them
+    dbg!(&M); // reading the value to ensure compiler actually computes them
+
+    
 
     now.elapsed().as_secs_f32()
 }
@@ -134,4 +143,5 @@ fn main() {
     });
 
     println!("\n\nIn all, Took {:?} seconds for {} threads.", now.elapsed().as_secs_f32(), threads);
+
 }
