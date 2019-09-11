@@ -56,7 +56,7 @@ fn do_stuff() -> f32 {
 }
 
 fn main() {
-    let threads = 32;
+    let threads = 16;
     rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
     
     let now = Instant::now();    
