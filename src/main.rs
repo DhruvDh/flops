@@ -41,7 +41,7 @@ fn do_stuff() -> f32 {
 
     let now = Instant::now();
     for _ in 0..100_000_000 {
-        for _ in 0..500 {
+        for _ in 0..50 {
             mul_add_them!(a, b, c,  x, y, z, i, j, k, m, n, o);
             // a macro that expands to a = a.mul_add(b, c); x = x.mul_add(y, z) and so on for each variable.
         }
@@ -56,7 +56,7 @@ fn do_stuff() -> f32 {
 }
 
 fn main() {
-    let threads = 16;
+    let threads = 1;
     rayon::ThreadPoolBuilder::new().num_threads(threads).build_global().unwrap();
     
     let now = Instant::now();    
