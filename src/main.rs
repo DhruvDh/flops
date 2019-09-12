@@ -189,12 +189,25 @@ fn do_math_8() {
     init_variables!([Fa, Fb, Fc, Fx, Fy, Fi], rng);
     init_variables!([Ga, Gb, Gc, Gx, Gy, Gi], rng);
  
+    init_variables!([AAa, AAb, AAc, AAx, AAy, AAi], rng);
+    init_variables!([ABa, ABb, ABc, ABx, ABy, ABi], rng);
+    init_variables!([ACa, ACb, ACc, ACx, ACy, ACi], rng);
+    init_variables!([ADa, ADb, ADc, ADx, ADy, ADi], rng);
+    init_variables!([AEa, AEb, AEc, AEx, AEy, AEi], rng);
+    init_variables!([AFa, AFb, AFc, AFx, AFy, AFi], rng);
+    init_variables!([AGa, AGb, AGc, AGx, AGy, AGi], rng);
+    init_variables!([AHa, AHb, AHc, AHx, AHy, AHi], rng);
+
     // macro that expands to code that initializes each variable to an array of random 8 32-bit floats that use SIMD operations 
 
 
     init_variables!((z, j, Az, Aj, Bz, Bj), rng);
     init_variables!((Cz, Cj, Dz, Dj), rng);
     init_variables!((Ez, Ej, Fz, Fj, Gz, Gj), rng);
+
+    init_variables!((AAz, AAj, ABz, ABj), rng);
+    init_variables!((ACz, ACj, ADz, ADj), rng);
+    init_variables!((AEz, AEj, AFz, AFj, AGz, AGj, AHz, AHj), rng);
 
     // same marco also initialized to a random i32 if variables are inside () instead of []
 
@@ -209,6 +222,14 @@ fn do_math_8() {
         math!(Fa, Fb, Fc, Fx, Fy, Fi, Fz, Fj);
         math!(Ga, Gb, Gc, Gx, Gy, Gi, Gz, Gj);
     
+        math!(AAa, AAb, AAc, AAx, AAy, AAi, AAz, AAj);
+        math!(ABa, ABb, ABc, ABx, ABy, ABi, ABz, ABj);
+        math!(ACa, ACb, ACc, ACx, ACy, ACi, ACz, ACj);
+        math!(ADa, ADb, ADc, ADx, ADy, ADi, ADz, ADj);
+        math!(AEa, AEb, AEc, AEx, AEy, AEi, AEz, AEj);
+        math!(AFa, AFb, AFc, AFx, AFy, AFi, AFz, AFj);
+        math!(AGa, AGb, AGc, AGx, AGy, AGi, AGz, AGj);
+        math!(AHa, AHb, AHc, AHx, AHy, AHi, AHz, AHj);    
     }
     
     debug_them!(a, c, y, z);
@@ -220,6 +241,15 @@ fn do_math_8() {
     debug_them!(Fa, Fc, Fy, Fz);
     debug_them!(Ga, Gc, Gy, Gz);
 
+
+    debug_them!(AAa, AAc, AAy, AAz);
+    debug_them!(ABa, ABc, ABy, ABz);
+    debug_them!(ACa, ACc, ACy, ACz);
+    debug_them!(ADa, ADc, ADy, ADz);    
+    debug_them!(AEa, AEc, AEy, AEz);
+    debug_them!(AFa, AFc, AFy, AFz);
+    debug_them!(AGa, AGc, AGy, AGz);
+    debug_them!(AHa, AHc, AHy, AHz);
     // macro that prints each variable to std_err to ensure compiler doesn't "optimize" away the computation
 }
 
@@ -381,7 +411,7 @@ fn main() {
         };
     });
 
-    println!("In all, Took {:?} seconds. {:?} GIOPS.", now.elapsed().as_secs_f32(), (25 * num_threads * 8) as f32 / now.elapsed().as_secs_f32());
+    println!("In all, Took {:?} seconds. {:?} GIOPS.", now.elapsed().as_secs_f32(), (25 * num_threads * 16) as f32 / now.elapsed().as_secs_f32());
 
 
     let now = Instant::now();    
