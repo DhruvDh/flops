@@ -49,15 +49,13 @@ fn do_math() {
     create_variables!(A, B, C, X, Y, Z, I, J, K, M, N, O,, new_simd_float);
     // basically initializes each variable to an array of random 8 32-bit floats that use SIMD operations 
 
-    for _ in 0..50 {
-        for _ in 0..100_000_000 {
-            mul_add_them!((a, b, c),  (x, y, z), (i, j, k), (m, n, o));
-            // a macro that expands to a = a.mul_add(b, c); x = x.mul_add(y, z) and so on for each variable.
-            // basically performs fused multiply add 5 times, once for each trio of variables.
-            mul_add_them!((A, B, C), (X, Y, Z), (I, J, K), (M, N, O));
-            // 8 fused multiply adds on arrays of 8 32-bit floats for a total of
-            // 8 * 8 * 2 = 128 floating point operations in one iteration
-        }
+    for _ in 0..1000_000_000 {
+        mul_add_them!((a, b, c),  (x, y, z), (i, j, k), (m, n, o));
+        // a macro that expands to a = a.mul_add(b, c); x = x.mul_add(y, z) and so on for each variable.
+        // basically performs fused multiply add 5 times, once for each trio of variables.
+        mul_add_them!((A, B, C), (X, Y, Z), (I, J, K), (M, N, O));
+        // 8 fused multiply adds on arrays of 8 32-bit floats for a total of
+        // 8 * 8 * 2 = 128 floating point operations in one iteration
     }
     
     debug_them!(a, x, i, m);
@@ -81,5 +79,5 @@ fn main() {
         };
     });
 
-    println!("In all, Took {:?} seconds. {:?} GFLOPS.", now.elapsed().as_secs_f32(), (5 * 16 * 16 * 8) as f32 / now.elapsed().as_secs_f32());
+    println!("In all, Took {:?} seconds. {:?} GFLOPS.", now.elapsed().as_secs_f32(), (128 * 16) as f32 / now.elapsed().as_secs_f32());
 }
