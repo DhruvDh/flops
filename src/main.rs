@@ -197,18 +197,6 @@ fn main() {
     rayon::ThreadPoolBuilder::new().num_threads(num_threads).build_global().unwrap();
     // builds a threadpool of 16 threads
  
-    // a time instant used for benchmarking
-    let now = Instant::now();    
-
-    // runs the function `do_math()` 16 times on 16 threads
-    rayon::scope(|s| {
-        for _ in 0..num_threads {
-            s.spawn(|_| do_math_1())
-        };
-    });
-
-    println!("In all, Took {:?} seconds. {:?} GIOPS.", now.elapsed().as_secs_f32(), (25 * num_threads * 2) as f32 / now.elapsed().as_secs_f32());
-
     let now = Instant::now();    
 
     // runs the function `do_math()` 16 times on 16 threads
