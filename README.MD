@@ -28,7 +28,7 @@ In all, accounting for the 8 cores brings the number to 332.8 GIOPs/sec (64-bit)
 
 ## II. Benchmarking
 
-### Floating point operations
+### Floating point operations (Result: 1219.8871 GFLOPs)
 
 To achieve max flops, in a loop that iterations 10 billion times, I ran 8 FMA operations on 32-bit 8 lane SIMD arrays, coming to (`8 lanes * 8 FMAs * 2 flop per FMA`) `128` flops per iteration; one such loop per thread, for 16 threads, coming to `16 * 128 * 10^10` ( = `2.048*10^14`) flops in total.
 
@@ -115,3 +115,5 @@ fn main() {
 }
 
 ```
+
+### Integer Operations
