@@ -48,8 +48,8 @@ fn do_math() {
     // macro that expands to let a = new_simd_float(); for each variable a, b, c...
     create_variables!(A, B, C, X, Y, Z, I, J, K, M, N, O,, new_simd_float);
     // basically initializes each variable to an array of random 8 32-bit floats that use SIMD operations 
-
-    for _ in 0..1000_000_000 {
+    
+    for _ in 0..(1e10 as i64) {
         mul_add_them!((a, b, c),  (x, y, z), (i, j, k), (m, n, o));
         // a macro that expands to a = a.mul_add(b, c); x = x.mul_add(y, z) and so on for each variable.
         // basically performs fused multiply add 5 times, once for each trio of variables.
