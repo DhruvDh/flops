@@ -68,7 +68,12 @@ fn main() {
     rayon::ThreadPoolBuilder::new().num_threads(num_threads).build_global().unwrap();
     // builds a threadpool of 16 threads
     
-    println!("In my attempt to get max flops I'll be running 8 fused multiply operations among 3 arrays of 8 32-bit floats; in a loop iterating 50 times; again in a loop iterati");
+    /**
+     * In a loop that iterations 10 billion times, I ran 8 FMA operations on 32-bit 8 lane SIMD arrays, 
+     * coming to (8 lanes * 8 FMAs * 2 flop per FMA) 128 flops per iteration.
+     * One such loop per thread, for 16 threads, coming to 16 * 128 * 10^10 flops in total.
+     */
+ 
     // a time instant used for benchmarking
     let now = Instant::now();    
 
@@ -79,5 +84,5 @@ fn main() {
         };
     });
 
-    println!("In all, Took {:?} seconds. {:?} GFLOPS.", now.elapsed().as_secs_f32(), (128 * 16) as f32 / now.elapsed().as_secs_f32());
+    println!("In all, Took {:?} seconds. {:?} GFLOPS.", now.elapsed().as_secs_f32(), (128 * 10 * 16 ) as f32 / now.elapsed().as_secs_f32());
 }

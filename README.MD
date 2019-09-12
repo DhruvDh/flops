@@ -25,3 +25,11 @@ Both Haswell and Broadwell can do -
 - 25 32-bit IOPs/cycle (three 8-wide vector ALU instructions + 1 integer ALU instruction)
 
 In all, accounting for the 8 cores brings the number to 332.8 GIOPs/sec (64-bit) or 665.6‬ GIOPs/sec (32-bit) at base frequency, assuming perfect thermals and no thermal throttling. Trying to account for thermals is pointless at best on account of so many variables involved.
+
+## II. Benchmarking
+
+### Floating point operations
+
+To achieve max flops, in a loop that iterations 10 billion times, I ran 8 FMA operations on 32-bit 8 lane SIMD arrays, coming to (`8 lanes * 8 FMAs * 2 flop per FMA`) `128` flops per iteration; one such loop per thread, for 16 threads, coming to `16 * 128 * 10^10` ( = `2.048*10^14`) flops in total.
+
+And `2.048e14` flops took `16.788439` seconds on MAMBA, coming to `1219.8871` GFLOPs. 
