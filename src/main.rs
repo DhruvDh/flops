@@ -43,20 +43,14 @@ macro_rules! debug_them {
     }
 }
 
-fn do_math_16() {
+fn do_math() {
     create_variables!(a, b, c, x, y, z, i, j, k, m, n, o,, new_simd_float);
-    create_variables!(Aa, Ab, Ac, Ax, Ay, Az, Ai, Aj, Ak, Am, An, Ao,, new_simd_float);
-    create_variables!(Ba, Bb, Bc, Bx, By, Bz, Bi, Bj, Bk, Bm, Bn, Bo,, new_simd_float);
-
     // macro that expands to let a = new_simd_float(); for each variable a, b, c...
     create_variables!(A, B, C, X, Y, Z, I, J, K, M, N, O,, new_simd_float);
     // basically initializes each variable to an array of random 8 32-bit floats that use SIMD operations 
     
     for _ in 0..(1e10 as i64) {
         mul_add_them!((a, b, c),  (x, y, z), (i, j, k), (m, n, o));
-        mul_add_them!((Aa, Ab, Ac),  (Ax, Ay, Az), (Ai, Aj, Ak), (Am, An, Ao));
-        mul_add_them!((Ba, Bb, Bc),  (Bx, By, Bz), (Bi, Bj, Bk), (Bm, Bn, Bo));
-
         // a macro that expands to a = a.mul_add(b, c); x = x.mul_add(y, z) and so on for each variable.
         // basically performs fused multiply add 5 times, once for each trio of variables.
         mul_add_them!((A, B, C), (X, Y, Z), (I, J, K), (M, N, O));
@@ -66,84 +60,6 @@ fn do_math_16() {
     
     debug_them!(a, x, i, m);
     debug_them!(A, X, I, M);    
-    debug_them!(Aa, Ax, Ai, Am);
-    debug_them!(Ba, Bx, Bi, Bm);
-
-    // macro that prints each variable to std_err to ensure compiler doesn't "optimize" away the computation
-}
-
-fn do_math_12() {
-    create_variables!(a, b, c, x, y, z, i, j, k, m, n, o,, new_simd_float);
-    create_variables!(Aa, Ab, Ac, Ax, Ay, Az, Ai, Aj, Ak, Am, An, Ao,, new_simd_float);
-
-    // macro that expands to let a = new_simd_float(); for each variable a, b, c...
-    create_variables!(A, B, C, X, Y, Z, I, J, K, M, N, O,, new_simd_float);
-    // basically initializes each variable to an array of random 8 32-bit floats that use SIMD operations 
-    
-    for _ in 0..(1e10 as i64) {
-        mul_add_them!((a, b, c),  (x, y, z), (i, j, k), (m, n, o));
-        mul_add_them!((Aa, Ab, Ac),  (Ax, Ay, Az), (Ai, Aj, Ak), (Am, An, Ao));
-
-        // a macro that expands to a = a.mul_add(b, c); x = x.mul_add(y, z) and so on for each variable.
-        // basically performs fused multiply add 5 times, once for each trio of variables.
-        mul_add_them!((A, B, C), (X, Y, Z), (I, J, K), (M, N, O));
-        // 8 fused multiply adds on arrays of 8 32-bit floats for a total of
-        // 8 * 8 * 2 = 128 floating point operations in one iteration
-    }
-    
-    debug_them!(a, x, i, m);
-    debug_them!(A, X, I, M);    
-    debug_them!(Aa, Ax, Ai, Am);
-
-    // macro that prints each variable to std_err to ensure compiler doesn't "optimize" away the computation
-}
-
-fn do_math_10() {
-    create_variables!(a, b, c, x, y, z, i, j, k, m, n, o,, new_simd_float);
-    create_variables!(Aa, Ab, Ac, Ax, Ay, Az, Ai, Aj, Ak, Am, An, Ao,, new_simd_float);
-
-    // macro that expands to let a = new_simd_float(); for each variable a, b, c...
-    create_variables!(A, B, C, X, Y, Z, I, J, K, M, N, O,, new_simd_float);
-    // basically initializes each variable to an array of random 8 32-bit floats that use SIMD operations 
-    
-    for _ in 0..(1e10 as i64) {
-        mul_add_them!((a, b, c),  (x, y, z), (i, j, k), (m, n, o));
-        mul_add_them!((Aa, Ab, Ac),  (Ax, Ay, Az));
-
-        // a macro that expands to a = a.mul_add(b, c); x = x.mul_add(y, z) and so on for each variable.
-        // basically performs fused multiply add 5 times, once for each trio of variables.
-        mul_add_them!((A, B, C), (X, Y, Z), (I, J, K), (M, N, O));
-        // 8 fused multiply adds on arrays of 8 32-bit floats for a total of
-        // 8 * 8 * 2 = 128 floating point operations in one iteration
-    }
-    
-    debug_them!(a, x, i, m);
-    debug_them!(A, X, I, M);    
-    debug_them!(Aa, Ax);
-
-    // macro that prints each variable to std_err to ensure compiler doesn't "optimize" away the computation
-}
-
-fn do_math_8() {
-    create_variables!(a, b, c, x, y, z, i, j, k, m, n, o,, new_simd_float);
-
-    // macro that expands to let a = new_simd_float(); for each variable a, b, c...
-    create_variables!(A, B, C, X, Y, Z, I, J, K, M, N, O,, new_simd_float);
-    // basically initializes each variable to an array of random 8 32-bit floats that use SIMD operations 
-    
-    for _ in 0..(1e10 as i64) {
-        mul_add_them!((a, b, c),  (x, y, z), (i, j, k), (m, n, o));
-
-        // a macro that expands to a = a.mul_add(b, c); x = x.mul_add(y, z) and so on for each variable.
-        // basically performs fused multiply add 5 times, once for each trio of variables.
-        mul_add_them!((A, B, C), (X, Y, Z), (I, J, K), (M, N, O));
-        // 8 fused multiply adds on arrays of 8 32-bit floats for a total of
-        // 8 * 8 * 2 = 128 floating point operations in one iteration
-    }
-    
-    debug_them!(a, x, i, m);
-    debug_them!(A, X, I, M);    
-
     // macro that prints each variable to std_err to ensure compiler doesn't "optimize" away the computation
 }
 
@@ -152,54 +68,16 @@ fn main() {
     rayon::ThreadPoolBuilder::new().num_threads(num_threads).build_global().unwrap();
     // builds a threadpool of 16 threads
     
-    /**
-     * In a loop that iterations 10 billion times, I ran 8 FMA operations on 32-bit 8 lane SIMD arrays, 
-     * coming to (8 lanes * 8 FMAs * 2 flop per FMA) 128 flops per iteration.
-     * One such loop per thread, for 16 threads, coming to 16 * 128 * 10^10 flops in total.
-     */
-
+    println!("In my attempt to get max flops I'll be running 8 fused multiply operations among 3 arrays of 8 32-bit floats; in a loop iterating 50 times; again in a loop iterati");
     // a time instant used for benchmarking
     let now = Instant::now();    
 
     // runs the function `do_math()` 16 times on 16 threads
     rayon::scope(|s| {
         for _ in 0..num_threads {
-            s.spawn(|_| do_math_16())
+            s.spawn(|_| do_math())
         };
     });
 
-    println!("16: In all, Took {:?} seconds for all threads to finish running, coming to {:?} GFLOPS.", now.elapsed().as_secs_f32(), (128 * 16 * 10 * 2) as f32 / now.elapsed().as_secs_f32());
-
-    let now = Instant::now();    
-
-    // runs the function `do_math()` 16 times on 16 threads
-    rayon::scope(|s| {
-        for _ in 0..num_threads {
-            s.spawn(|_| do_math_12())
-        };
-    });
-
-    println!("12: In all, Took {:?} seconds for all threads to finish running, coming to {:?} GFLOPS.", now.elapsed().as_secs_f32(), (192 * 16 * 10) as f32 / now.elapsed().as_secs_f32());
-
-    let now = Instant::now();    
-
-    // runs the function `do_math()` 16 times on 16 threads
-    rayon::scope(|s| {
-        for _ in 0..num_threads {
-            s.spawn(|_| do_math_10())
-        };
-    });
-
-    println!("10: In all, Took {:?} seconds for all threads to finish running, coming to {:?} GFLOPS.", now.elapsed().as_secs_f32(), (160 * 16 * 10) as f32 / now.elapsed().as_secs_f32());
-
-    let now = Instant::now();    
-
-    // runs the function `do_math()` 16 times on 16 threads
-    rayon::scope(|s| {
-        for _ in 0..num_threads {
-            s.spawn(|_| do_math_8())
-        };
-    });
-
-    println!("8: In all, Took {:?} seconds for all threads to finish running, coming to {:?} GFLOPS.", now.elapsed().as_secs_f32(), (128 * 16 * 10) as f32 / now.elapsed().as_secs_f32());
+    println!("In all, Took {:?} seconds. {:?} GFLOPS.", now.elapsed().as_secs_f32(), (128 * 16) as f32 / now.elapsed().as_secs_f32());
 }
