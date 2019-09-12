@@ -27,14 +27,6 @@ macro_rules! create_variables {
     };
 }
 
-macro_rules! mul_add_them {
-    ($(($x:ident, $y:ident, $z:ident)),+) => {
-        $(
-            $x = $x.mul_add($y, $z);
-        )+
-    };
-}
-
 macro_rules! debug_them {
     ($($x:ident),+) => {
         $(
@@ -44,22 +36,22 @@ macro_rules! debug_them {
 }
 
 fn do_math() {
-    create_variables!(a, b, c, x, y, z, i, j, k, m, n, o,, new_simd_float);
+    create_variables!(a, b, c, x, y, i,, new_simd_int);
+    let mut rng = rand::thread_rng();
+    let mut z: i32 = rng.gen();
+    let j: i32 = rng.gen();
+
     // macro that expands to let a = new_simd_float(); for each variable a, b, c...
-    create_variables!(A, B, C, X, Y, Z, I, J, K, M, N, O,, new_simd_float);
     // basically initializes each variable to an array of random 8 32-bit floats that use SIMD operations 
     
     for _ in 0..(1e10 as i64) {
-        mul_add_them!((a, b, c),  (x, y, z), (i, j, k), (m, n, o));
-        // a macro that expands to a = a.mul_add(b, c); x = x.mul_add(y, z) and so on for each variable.
-        // basically performs fused multiply add 5 times, once for each trio of variables.
-        mul_add_them!((A, B, C), (X, Y, Z), (I, J, K), (M, N, O));
-        // 8 fused multiply adds on arrays of 8 32-bit floats for a total of
-        // 8 * 8 * 2 = 128 floating point operations in one iteration
+        a = a * b;
+        c = c + x;
+        y = y - i;
+        z = z.wrapping_add(j);
     }
     
-    debug_them!(a, x, i, m);
-    debug_them!(A, X, I, M);    
+    debug_them!(a, c, y);
     // macro that prints each variable to std_err to ensure compiler doesn't "optimize" away the computation
 }
 
@@ -78,5 +70,5 @@ fn main() {
         };
     });
 
-    println!("In all, Took {:?} seconds. {:?} GFLOPS.", now.elapsed().as_secs_f32(), (128 * 10 * 16 ) as f32 / now.elapsed().as_secs_f32());
+    println!("In all, Took {:?} seconds. {:?} GIOPS.", now.elapsed().as_secs_f32(), (25 * 10 * num_threads) as f32 / now.elapsed().as_secs_f32());
 }
