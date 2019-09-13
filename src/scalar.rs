@@ -60,3 +60,4 @@ fn main() {
     dbg!(&i); // reading the value to ensure compiler actually computes them
     dbg!(&o); // reading the value to ensure compiler actually computes them
 }
+
