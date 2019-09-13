@@ -31,7 +31,7 @@ macro_rules! debug_them {
 macro_rules! math {
     ($a:ident, $b:ident, $c:ident, $x:ident, $y:ident, $i:ident, $z:ident, $j:ident) => {
         $a = $a * $a;
-        $c = $c + $x;
+        // $c = $c + $x;
         $y = $y - $i;
         $z = $z - $j;
     };
@@ -93,5 +93,5 @@ fn main() {
         };
     });
 
-    println!("In all, Took {:?} seconds. {:?} GIOPS.", now.elapsed().as_secs_f32(), (25 * num_threads * 8) as f32 / now.elapsed().as_secs_f32());
+    println!("In all, Took {:?} seconds. {:?} GIOPS.", now.elapsed().as_secs_f32(), (17 * num_threads * 8) as f32 / now.elapsed().as_secs_f32());
 }
