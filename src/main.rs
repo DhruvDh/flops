@@ -30,10 +30,10 @@ macro_rules! debug_them {
 
 macro_rules! math {
     ($a:ident, $b:ident, $c:ident, $x:ident, $y:ident, $i:ident, $z:ident, $j:ident) => {
-        $a = $a * $a;
-        $c = $c + $c;
+        $a = $a * $b;
+        $c = $c + $x;
         $y = $y - $i;
-        $z = $z.wrapping_add($z);
+        $z = $z.wrapping_add($j);
     };
 }
 
