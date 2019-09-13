@@ -1,5 +1,13 @@
 # Assignment 1: Benchmarking Flops and Iops
 
+- [Assignment 1: Benchmarking Flops and Iops](#assignment-1-benchmarking-flops-and-iops)
+  - [I. Model](#i-model)
+  - [II. Benchmarking](#ii-benchmarking)
+    - [Floating point operations (Result: 1345.6177 GFLOPs)](#floating-point-operations-result-13456177-gflops)
+      - [Code](#code)
+    - [Integer Operations (Result: 613.46686 GIOPs)](#integer-operations-result-61346686-giops)
+      - [Code](#code-1)
+
 ## I. Model
 
 1. What is a compute node of mamba composed of? What kind of processor it has? Which architecture is the processor built on? (For instance, some core i7 are based on the ivy-bridge architecture, some on the haswell architecture, ...)
