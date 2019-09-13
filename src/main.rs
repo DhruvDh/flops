@@ -33,7 +33,7 @@ macro_rules! math {
         $a = $a * $b;
         $c = $c + $x;
         $y = $y - $i;
-        $z = $z.wrapping_add($j);
+        $z = $z - $j;
     };
 }
 
