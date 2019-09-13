@@ -62,10 +62,10 @@ fn do_math() {
         math!(Aa, Ab, Ac, Ax, Ay, Ai, Az, Aj);
         math!(Ba, Bb, Bc, Bx, By, Bi, Bz, Bj);
         math!(Ca, Cb, Cc, Cx, Cy, Ci, Cz, Cj);
-        // math!(Da, Db, Dc, Dx, Dy, Di, Dz, Dj);
-        // math!(Ea, Eb, Ec, Ex, Ey, Ei, Ez, Ej);
-        // math!(Fa, Fb, Fc, Fx, Fy, Fi, Fz, Fj);
-        // math!(Ga, Gb, Gc, Gx, Gy, Gi, Gz, Gj);  
+        math!(Da, Db, Dc, Dx, Dy, Di, Dz, Dj);
+        math!(Ea, Eb, Ec, Ex, Ey, Ei, Ez, Ej);
+        math!(Fa, Fb, Fc, Fx, Fy, Fi, Fz, Fj);
+        math!(Ga, Gb, Gc, Gx, Gy, Gi, Gz, Gj);  
         // does 25 integer ops per math!() macro call among all variables  
     }
     
@@ -94,5 +94,5 @@ fn main() {
         };
     });
 
-    println!("In all, Took {:?} seconds. {:?} GIOPS.", now.elapsed().as_secs_f32(), (250 * num_threads * 4) as f32 / now.elapsed().as_secs_f32());
+    println!("In all, Took {:?} seconds. {:?} GIOPS.", now.elapsed().as_secs_f32(), (250 * num_threads * 8) as f32 / now.elapsed().as_secs_f32());
 }
