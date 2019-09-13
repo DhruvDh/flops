@@ -30,7 +30,7 @@ macro_rules! debug_them {
 
 macro_rules! math {
     ($a:ident, $b:ident, $c:ident, $x:ident, $y:ident, $i:ident, $z:ident, $j:ident) => {
-        $a = $a * $b;
+        $a = $a * $a;
         $c = $c + $x;
         $y = $y - $i;
         $z = $z - $j;
@@ -80,7 +80,7 @@ fn do_math() {
 }
 
 fn main() {
-    let num_threads = 8;
+    let num_threads = 16;
     rayon::ThreadPoolBuilder::new().num_threads(num_threads).build_global().unwrap();
     // builds a threadpool of 16 threads
  
